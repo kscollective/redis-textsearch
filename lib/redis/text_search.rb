@@ -63,8 +63,9 @@ class Redis
       # how to retrieve records.  You can override it by explicitly defining a
       # +text_search_find+ class method that takes an array of IDs as an argument.
       def text_search_find(ids, options)
-        if defined?(ActiveModel)
+        if false # defined?(ActiveModel)
           # guess that we're on Rails 3
+          # This doesn't matter!
           raise "text_search_find not implemented for Rails 3 (yet) - patches welcome"
         elsif defined?(ActiveRecord::Base) and ancestors.include?(ActiveRecord::Base)
           merge_text_search_conditions!(ids, options)
@@ -72,7 +73,9 @@ class Redis
         elsif defined?(Sequel::Model) and ancestors.include?(Sequel::Model)
           self[primary_key.to_sym => ids].filter(options)
         elsif defined?(DataMapper::Resource) and included_modules.include?(DataMapper::Resource)          
-          get(options.merge(primary_key.to_sym => ids))
+          #get(options.merge(primary_key.to_sym => ids))
+          # get doesn't work with multiple ids. #all does though.
+          all(options.merge(primary_key.to_sym => ids))
         end
       end
 
