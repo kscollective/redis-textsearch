@@ -40,7 +40,7 @@ module Redis::TextSearch
   #   
   #   # Redis::TextSearch::Collection is now available for use
   class Collection < Array
-    attr_reader :current_page, :per_page, :total_entries, :total_pages
+    attr_reader :current_page, :per_page, :total_entries, :total_pages, :pager
 
     # Arguments to the constructor are the current page number, per-page limit
     # and the total number of entries. The last argument is optional because it
@@ -51,7 +51,11 @@ module Redis::TextSearch
       raise InvalidPage.new(page, @current_page) if @current_page < 1
       @per_page = per_page.to_i
       raise ArgumentError, "`per_page` setting cannot be less than 1 (#{@per_page} given)" if @per_page < 1
-      
+      @pager = DataMapper::Pager.new({
+        :page     => self.page, 
+        :per_page => self.per_page,
+        :total    => self.total_entries
+      })
       self.total_entries = total if total
     end
 
