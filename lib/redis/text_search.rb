@@ -75,7 +75,7 @@ class Redis
         elsif defined?(DataMapper::Resource) and included_modules.include?(DataMapper::Resource)          
           #get(options.merge(primary_key.to_sym => ids))
           # get doesn't work with multiple ids. #all does though.
-          all(options.merge(primary_key.to_sym => ids))
+          all(options.merge(:id => ids))
         end
       end
 
