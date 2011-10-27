@@ -40,7 +40,7 @@ module Redis::TextSearch
   #   
   #   # Redis::TextSearch::Collection is now available for use
   class Collection < Array
-    attr_reader :current_page, :per_page, :total_entries, :total_pages, :pager
+    attr_reader :current_page, :per_page, :total_entries, :total_pages
 
     # Arguments to the constructor are the current page number, per-page limit
     # and the total number of entries. The last argument is optional because it
