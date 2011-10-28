@@ -57,9 +57,9 @@ module Redis::TextSearch
 
     def pager
       DataMapper::Pager.new({
-        :page_param     => self.current_page,
+        :page  => self.current_page,
         :limit => self.per_page,
-        :total    => self.total_entries
+        :total => self.total_entries
       })
     end
 
