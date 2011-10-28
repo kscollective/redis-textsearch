@@ -150,7 +150,7 @@ class Redis
           fields.each do |f|
             sets = text_search_sets_for(f,args)
             # Execute intersection per loop (OR)
-            ids += redis.sinter(*sets)
+            ids += (redis.sinter(*sets) || [])
           end
         end
 
